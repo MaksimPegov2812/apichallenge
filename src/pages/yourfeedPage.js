@@ -1,6 +1,6 @@
 
 //Создание класса страницы
-export class YourfeedPage {
+export class YourFeedPage {
     //В конструкторе присваиваем наименования объектам на странице
     constructor(page) {
         this.page = page;

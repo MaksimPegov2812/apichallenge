@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { MainPage } from '../src/pages/mainPage';
 import { RegisterPage } from '../src/pages/registerPage';
-import { YourfeedPage } from '../src/pages/yourfeedPage';
+import { YourFeedPage } from '../src/pages/yourfeedPage';
 import { AddArticlePage } from '../src/pages/addarticlePage';
 import { ArticlePage } from '../src/pages/articlePage';
 
@@ -14,7 +14,7 @@ test.describe('Авторизация пользователя', () => {
         //объявление констант
         const mainPage = new MainPage(page);
         const registerPage = new RegisterPage(page);
-        const yourfeedPage = new YourfeedPage(page);
+        const yourFeedPage = new YourFeedPage(page);
         const user = {
             email: faker.internet.email(),
             password: faker.internet.password(),
@@ -28,11 +28,11 @@ test.describe('Авторизация пользователя', () => {
 
     test('Создание новой публикации', async ({ page }) => {
         //Объявление констант
-        const yourFeedPage = new YourfeedPage(page);
+        const yourFeedPage = new YourFeedPage(page);
         const addArticlePage = new AddArticlePage(page);        
-        const newarticle = {
+        const newArticle = {
             title: faker.lorem.sentence(3),            
-            articleabout: faker.lorem.sentence({ min: 3, max: 5 }),
+            articleAbout: faker.lorem.sentence({ min: 3, max: 5 }),
             content: faker.lorem.text(),
             tags: faker.lorem.text(1)
         };
@@ -40,32 +40,34 @@ test.describe('Авторизация пользователя', () => {
 
         //Создание новой публикации
         await yourFeedPage.gotoArticle(); //переход на страницу создания публикации https://realworld.qa.guru/#/editor
-        await addArticlePage.tocreateArticle(newarticle.title, newarticle.articleabout, newarticle.content, newarticle.tags); //создание новой публикации и переход на страницу созданной публикации
+        await addArticlePage.tocreateArticle(newArticle.title, newArticle.articleAbout, newArticle.content, newArticle.tags); //создание новой публикации и переход на страницу созданной публикации
         //сравнение заголовков публикации при ее создании и на странице новой публикации
-        await expect(page.locator('.container').nth(1)).toContainText(newarticle.title);
+        await expect(articlePage.newArticleTitle).toContainText(newArticle.title);
+
+
     });
 
     test('Создание комментария к публикации', async ({ page }) => {
         //Объявление констант
-        const yourFeedPage = new YourfeedPage(page);
+        const yourFeedPage = new YourFeedPage(page);
         const addArticlePage = new AddArticlePage(page);
         const articlePage = new ArticlePage(page);        
-        const newarticle = {
+        const newArticle = {
             title: faker.lorem.sentence(3),            
-            articleabout: faker.lorem.sentence({ min: 3, max: 5 }),
+            articleAbout: faker.lorem.sentence({ min: 3, max: 5 }),
             content: faker.lorem.text(),
             tags: faker.lorem.text(1)
         };        
-        const commentarticle = {
+        const commentArticle = {
             comment: faker.lorem.text(),
         };
 
         //Создание новой публикации
         await yourFeedPage.gotoArticle();
-        await addArticlePage.tocreateArticle(newarticle.title, newarticle.articleabout, newarticle.content, newarticle.tags);    
+        await addArticlePage.tocreateArticle(newArticle.title, newArticle.articleAbout, newArticle.content, newArticle.tags);    
         //Написание комментария к созданное публикации        
-        await articlePage.topostCommentArticle(commentarticle.comment);
-        //Ссравнение текста написанного и опубликованного комментария к созданной публикации    
-        await expect(page.locator('div > .card-block')).toContainText(commentarticle.comment);
+        await articlePage.topostCommentArticle(commentArticle.comment);
+        //Сравнение текста написанного и опубликованного комментария к созданной публикации    
+        await expect(addArticlePage.newCommentField).toContainText(commentArticle.comment);
       });
 })

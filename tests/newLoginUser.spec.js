@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { MainPage } from '../src/pages/mainPage';
 import { RegisterPage } from '../src/pages/registerPage';
-import { YourfeedPage } from '../src/pages/yourfeedPage';
+import { YourFeedPage } from '../src/pages/yourfeedPage';
 import { ProfileSettingsPage } from '../src/pages/profileSettingsPage';
 import { LoginPage } from '../src/pages/loginPage';
 
@@ -15,7 +15,7 @@ test.describe('Проверка изменения пароля пользова
         //объявление констант
         const mainPage = new MainPage(page);
         const registerPage = new RegisterPage(page);
-        const yourfeedPage = new YourfeedPage(page);
+        const yourFeedPage = new YourFeedPage(page);
         const profileSettingsPage = new ProfileSettingsPage(page);
         const loginPage = new LoginPage(page);
         //данные пользователя
@@ -35,10 +35,10 @@ test.describe('Проверка изменения пароля пользова
         await registerPage.register(user.username, user.email, user.password);//регистрация пользователя
 
         //действие на странице YourfeedPage пользователя клик на кнопку с именем пользователя, где нажимаем на Settings
-        await yourfeedPage.gotoProfile();
+        await yourFeedPage.gotoProfile();
 
         //Клик на кнопку "Settings"
-        await yourfeedPage.gotoSettings();
+        await yourFeedPage.gotoSettings();
 
         //Изменение пароля на странице настроек профиля
         await profileSettingsPage.tochangePasswordProfile(newpassword.password);
@@ -56,7 +56,7 @@ test.describe('Проверка изменения пароля пользова
         await loginPage.gologin(user.email, newpassword.password);
 
         //Ожидаемй результат совпадения имени пользователя
-        await expect(yourfeedPage.profileNameField).toContainText(user.username);
+        await expect(yourFeedPage.profileNameField).toContainText(user.username);
     });
     
 })
