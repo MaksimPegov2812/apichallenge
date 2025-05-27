@@ -200,7 +200,7 @@ test.describe('@challenge API', () => {
         expect(body.title).toBe("updated title");; // Проверка измененного наименования задачи  
     });
 
-    //18 POST/todos/id (404) Внесение изменений в несуществующую задачу 
+    //18 POST/todos/id (404) Внесение изменений в отсутствующую задачу 
     test('post todos/id (404)', async ({ request }) => {
         const response = await request.post(`${URL}todos/300`, {
             headers: { 'x-challenger': token },
