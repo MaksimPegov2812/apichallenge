@@ -1,0 +1,22 @@
+#название workflow
+name: pw tests 
+
+#когда мы запускаем автотесты
+on:
+	push:
+		branches: [main, master]
+	pull_request:
+		branches: [main, master]
+	#ручной запуск автотетов
+	workflow_dispatch:
+jobs: 
+	e2eTests:
+		timeout-minutes: 30
+		runs-on: ubuntu-latest
+		step:
+      -	uses: actions/checkout@v4
+      -	uses: actions/setup-node@v4
+      -	name: Установить PW
+      run: npx playwright install --with-deps
+      -	name: Запустить PW
+      run: npx run tests 
