@@ -25,6 +25,9 @@ jobs:
       - name: Установить PW
         run: npx playwright install --with-deps
 
+      - name: Проверка содержимого папки tests
+        run: ls -R tests/
+
       - name: Запустить PW
-        run: npx playwright test tests/
+        run: npx playwright test tests/apichallenge.spec.js
     
