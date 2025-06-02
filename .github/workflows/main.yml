@@ -4,9 +4,13 @@ name: pw tests
 # когда мы запускаем автотесты
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
+      - master
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
+      - master
   # ручной запуск автотестов
   workflow_dispatch:
 
@@ -14,10 +18,9 @@ jobs:
   e2eTests:
     timeout-minutes: 30
     runs-on: ubuntu-latest
-    steps:  # исправлено с 'step' на 'steps'
+    steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        # желательно указать версию node, например 'node-version: '14''
         with:
           node-version: '14'
       - name: Установить PW
