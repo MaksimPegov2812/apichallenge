@@ -19,11 +19,12 @@ jobs:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '14'
+      - name: Проверка версии Node.js
+        run: node -v
+
       - name: Установить PW
         run: npx playwright install --with-deps
+
       - name: Запустить PW
-        run: npx run tests
+        run: npx playwright test
+    
