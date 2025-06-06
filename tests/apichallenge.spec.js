@@ -395,7 +395,7 @@ test.describe('@challenge API', () => {
             headers: {"x-challenger": token,},
         });
         const body = await getResponse.json();
-        const newToken = "12345678-1234-1234-1234-123456789123";
+        const newToken = "12345678-1234-1234-1234-123456789124";
         body.xChallenger = newToken;
         //Восстанавление прогресса с использованием текущего токена
         const putResponse = await request.put(`${URL}challenger/${newToken}`, {
