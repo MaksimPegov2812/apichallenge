@@ -15,8 +15,14 @@ jobs:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
-      - name: Проверка версии Node.js
-        run: node -v
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      
+      - name: Установить пакеты node
+        run: npm i
 
       - name: Установить PW
         run: npx playwright install --with-deps
