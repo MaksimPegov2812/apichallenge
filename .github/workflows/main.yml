@@ -32,4 +32,50 @@ jobs:
 
       - name: Запустить PW
         run: npx playwright test tests/apichallenge.spec.js
+
+      #Сохраняем отчет PW
+      - uses: actions/upload-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: test-results
+          path: test-results
+          retention-days: 20
+
+      #Сохраняем результаты Allure
+      - uses: actions/upload-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: allure-results
+          path: allure-results
+          retention-days: 20
+      
+      #Забиаем результаты предыдущих запусков из созданной ветки
+      - uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      #Формиуем из Allure results отчет allure-report
+      - uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure-results: allure_results
+          gh_pages: gh_pages
+          allure_report: allure_report
+          allure_history: allure_istory
+          keep_reports: 20
+
+      #Деплой отчета
+      - name: deploy report
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_branch: gh-pages
+          publish_gir: allure-history
     
